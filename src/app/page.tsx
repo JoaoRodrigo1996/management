@@ -4,8 +4,9 @@ import { getEmployers } from "@/actions/get-employers";
 import { EmployersList } from "@/components/employers-list";
 import { EmployersListLoading } from "@/components/employers-list-loading";
 
-export default async function Home() {
-  const employers = getEmployers()
+export default async function Home({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
+  const page = typeof searchParams.page === 'string' ? Number(searchParams.page) : 1
+  const employers = getEmployers(page)
 
   return (
     <>
@@ -16,7 +17,7 @@ export default async function Home() {
       </header>
 
       <Suspense fallback={<EmployersListLoading />}>
-        <EmployersList employersPromise={employers} />
+        <EmployersList employersPromise={employers} page={page} />
       </Suspense>
     </>
   );

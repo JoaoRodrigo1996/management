@@ -1,16 +1,21 @@
-'use server'
+import 'server-only'
 
 import { prisma } from "@/lib/prisma";
 import { network } from "@/utils/network";
 
-export async function getEmployers() {
+export async function getEmployers(page: number) {
   await network(5000)
-  const employers = await prisma.employer.findMany({
-    take: 10,
-    orderBy: {
-      name: 'asc'
-    }
-  });
 
-  return employers
+  const [employers, total] = await Promise.all([
+    prisma.employer.findMany({
+      take: 10,
+      skip: (page - 1) * 10,
+      orderBy: {
+        name: 'asc'
+      }
+    }),
+    prisma.employer.count()
+  ])
+
+  return {employers, total}
 }

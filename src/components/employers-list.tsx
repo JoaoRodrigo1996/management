@@ -1,28 +1,34 @@
 'use client'
 
-import { use } from "react";
+import { use, useState } from "react";
 import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Search } from "lucide-react";
 
 import { formatDate } from "@/utils/format-date";
 import { formatSalary } from "@/utils/format-salary";
+import { Pagination } from "./pagination";
 
 type Employers = {
-  id: string
-  name: string
-  job: string
-  dateOfBirth: Date
-  hireDate: Date
-  salary: number
-  city: string
-  state: string
-}[]
+  employers: {
+    id: string
+    name: string
+    job: string
+    dateOfBirth: Date
+    hireDate: Date
+    salary: number
+    city: string
+    state: string
+  }[],
+  total: number
+}
 
 type EmployersListProps = {
   employersPromise: Promise<Employers>
+  page: number
 }
 
-export function EmployersList({ employersPromise }: EmployersListProps) {
-  const employers = use(employersPromise)
+export function EmployersList({ employersPromise, page }: EmployersListProps) {
+  const { employers, total } = use(employersPromise)
+  const totalPages = Math.ceil(total / 10)
 
   return (
     <div className="space-y-6 mt-4">
@@ -61,34 +67,14 @@ export function EmployersList({ employersPromise }: EmployersListProps) {
               ))
             }
           </tbody>
-          <tfoot className="border-t border-white/10">
-            <tr>
-              <td className="py-5 px-4 text-sm text-zinc-200" colSpan={3}>
-                Mostrando {employers.length} de 10 items
-              </td>
-              <td className='text-right' colSpan={3}>
-                <div className="inline-flex items-center gap-8">
-                  <span className="">Página 1 de 10</span>
-
-                  <div className="flex gap-1.5">
-                    <button className='bg-white/5 rounded-lg p-2 hover:bg-white/10'>
-                      <ChevronsLeft className='size-4' />
-                    </button>
-                    <button className='bg-white/5 rounded-lg p-2 hover:bg-white/10'>
-                      <ChevronLeft className='size-4' />
-                    </button>
-                    <button className='bg-white/5 rounded-lg p-2 hover:bg-white/10'>
-                      <ChevronRight className='size-4' />
-                    </button>
-                    <button className='bg-white/5 rounded-lg p-2 hover:bg-white/10'>
-                      <ChevronsRight className='size-4' />
-                    </button>
-                  </div>
-                </div>
-              </td>
-            </tr>
-          </tfoot>
         </table>
+
+        <Pagination
+          employers={employers}
+          page={page}
+          totalPages={totalPages}
+          total={total}
+        />
       </section>
     </div>
   )
