@@ -4,7 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { network } from "@/utils/network";
 
 export async function getEmployers(page: number) {
-  await network(5000)
+  await network(1000)
 
   const [employers, total] = await Promise.all([
     prisma.employer.findMany({

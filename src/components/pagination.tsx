@@ -1,5 +1,5 @@
 import { ChevronsLeft, ChevronLeft, ChevronRight, ChevronsRight } from "lucide-react";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 type PaginationProps = {
   page?: number
@@ -9,6 +9,8 @@ type PaginationProps = {
 }
 
 export function Pagination({ employers, total, totalPages, page = 1 }: PaginationProps) {
+  const router = useRouter()
+
   return (
     <div className='flex justify-between items-center px-4 py-3 border-t border-white/10'>
       <div className="text-sm text-zinc-200">
@@ -19,18 +21,18 @@ export function Pagination({ employers, total, totalPages, page = 1 }: Paginatio
           <span className="">Página {page} de {totalPages}</span>
 
           <div className="flex gap-1.5">
-            <Link href={`/?page=${1}`} className='disabled:cursor-not-allowed disabled:bg-zinc-900 bg-zinc-800 rounded-lg p-2 hover:bg-zinc-800/95'>
+            <button disabled={page <= 1} onClick={() => router.push(`/?page=${1}`)} className='disabled:cursor-not-allowed disabled:bg-zinc-900 bg-zinc-800 rounded-lg p-2 hover:bg-zinc-800/95'>
               <ChevronsLeft className='size-4' />
-            </Link>
-            <Link href={`/?page=${page > 1 ? page - 1 : 1}`} className='disabled:cursor-not-allowed disabled:bg-zinc-900 bg-zinc-800 rounded-lg p-2 hover:bg-zinc-800/95'>
+            </button>
+            <button disabled={page <= 1} onClick={() => router.push(`/?page=${page - 1}`)} className='disabled:cursor-not-allowed disabled:bg-zinc-900 bg-zinc-800 rounded-lg p-2 hover:bg-zinc-800/95'>
               <ChevronLeft className='size-4' />
-            </Link>
-            <Link href={`/?page=${page + 1}`} className='disabled:cursor-not-allowed disabled:bg-zinc-900 bg-zinc-800 rounded-lg p-2 hover:bg-zinc-800/95'>
+            </button>
+            <button disabled={page >= totalPages} onClick={() => router.push(`/?page=${page + 1}`)} className='disabled:cursor-not-allowed disabled:bg-zinc-900 bg-zinc-800 rounded-lg p-2 hover:bg-zinc-800/95'>
               <ChevronRight className='size-4' />
-            </Link>
-            <Link href={`/?page=${totalPages}`} className='disabled:cursor-not-allowed disabled:bg-zinc-900 bg-zinc-800 rounded-lg p-2 hover:bg-zinc-800/95'>
+            </button>
+            <button disabled={page >= totalPages} onClick={() => router.push(`/?page=${totalPages}`)} className='disabled:cursor-not-allowed disabled:bg-zinc-900 bg-zinc-800 rounded-lg p-2 hover:bg-zinc-800/95'>
               <ChevronsRight className='size-4' />
-            </Link>
+            </button>
           </div>
         </div>
       </div>
