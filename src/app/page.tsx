@@ -11,8 +11,8 @@ type PageProps = {
 }
 
 export default async function Home({ searchParams }: PageProps) {
-  const { page } = await loadSearchParams(searchParams)
-  const employers = getEmployers(page)
+  const { page, q } = await loadSearchParams(searchParams)
+  const employers = getEmployers(page, { q })
 
   return (
     <>

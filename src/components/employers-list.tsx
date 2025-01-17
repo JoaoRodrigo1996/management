@@ -1,11 +1,11 @@
 'use client'
 
-import { use, useState } from "react";
-import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Search } from "lucide-react";
+import { use } from "react";
 
 import { formatDate } from "@/utils/format-date";
 import { formatSalary } from "@/utils/format-salary";
 import { Pagination } from "./pagination";
+import { SearchForm } from "./search-form";
 
 type Employers = {
   employers: {
@@ -32,13 +32,8 @@ export function EmployersList({ employersPromise, page }: EmployersListProps) {
 
   return (
     <div className="space-y-6 mt-4">
-      <div className='flex items-center gap-3 px-4 w-72 py-1.5 border border-white/10 rounded-lg' >
-        <input
-          className="bg-transparent flex-1 outline-none border-0 p-0 text-sm focus:ring-0"
-          placeholder="Search employer..."
-        />
-        <Search className='size-4 ' />
-      </div>
+      <SearchForm />
+
       <section className="border border-white/10 rounded">
         <table className="w-full">
           <thead className="border-b border-white/10">
