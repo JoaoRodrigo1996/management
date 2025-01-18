@@ -1,12 +1,14 @@
 'use client'
 
 import Form from 'next/form'
-import { Search } from "lucide-react";
+import { Loader, Loader2, Search } from "lucide-react";
 import { useSearchParams, useRouter } from 'next/navigation';
+import { useTransition } from 'react';
 
 export function SearchForm() {
   const searchParams = useSearchParams()
   const router = useRouter()
+  const [isPending, startTransition] = useTransition()
 
   return (
     <Form
@@ -18,11 +20,17 @@ export function SearchForm() {
         onChange={(event) => {
           const newSearchParams = new URLSearchParams(searchParams.toString())
           newSearchParams.set('q', event.target.value)
-          router.push(`?${newSearchParams.toString()}`)
+          startTransition(() => {
+            router.push(`?${newSearchParams.toString()}`)
+          })
         }}
         placeholder="Search employer..."
       />
-      <Search className='size-4 ' />
+      {isPending ? (
+        <Loader2 className='size-4 animate-spin' />
+      ) : (
+        <Search className='size-4 ' />
+      )}
     </Form>
   )
 }
