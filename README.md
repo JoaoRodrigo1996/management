@@ -20,11 +20,8 @@ Primeiro, clone o projeto do github:
 
 ```bash
 pnpm install
-# or
 pnpm dlx prisma generate
-# or
 pnpm dev
-# or
 ```
 
 Abra [http://localhost:3000](http://localhost:3000) no seu navegador para ver o resultado.
