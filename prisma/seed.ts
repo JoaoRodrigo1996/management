@@ -215,7 +215,7 @@ const EMPLOYERS = [
 
 async function main() {
   await Promise.all(
-    EMPLOYERS.map(async (employer) => {
+    EMPLOYERS.map(employer => {
       return prisma.employer.create({
         data: {
           name: employer.name,
