@@ -16,8 +16,8 @@ export default async function Home({ searchParams }: PageProps) {
 
   return (
     <>
-      <header className='py-5'>
-        <h1 className="text-2xl font-semibold tracking-tight leading-normal">
+      <header className='pt-16 pb-5'>
+        <h1 className="text-3xl font-semibold tracking-tight leading-normal">
           Employers Management
         </h1>
       </header>

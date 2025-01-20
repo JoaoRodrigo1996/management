@@ -6,6 +6,7 @@ import { formatDate } from "@/utils/format-date";
 import { formatSalary } from "@/utils/format-salary";
 import { Pagination } from "./pagination";
 import { SearchForm } from "./search-form";
+import Link from "next/link";
 
 type Employers = {
   employers: {
@@ -38,7 +39,7 @@ export function EmployersList({ employersPromise, page }: EmployersListProps) {
         <table className="w-full">
           <thead className="border-b border-white/10">
             <tr>
-              <th className="py-3 px-4 text-sm font-semibold text-left">Nome</th>
+              <th className="py-3 px-4 text-sm font-semibold text-left">Name</th>
               <th className="py-3 px-4 text-sm font-semibold text-left">job</th>
               <th className="py-3 px-4 text-sm font-semibold text-left">Date of birth</th>
               <th className="py-3 px-4 text-sm font-semibold text-left">Hire date</th>
@@ -48,9 +49,13 @@ export function EmployersList({ employersPromise, page }: EmployersListProps) {
             </tr>
           </thead>
           <tbody>
-            {
+            {employers.length === 0 ? (
+              <tr>
+                <td colSpan={7} className="py-3 px-4 text-sm font-medium text-zinc-200 text-center">No employers found</td>
+              </tr>
+            ) : (
               employers.map((employer) => (
-                <tr key={employer.id}>
+                <tr key={employer.id} className="hover:bg-zinc-900 transition-colors">
                   <td className="py-3 px-4 text-sm text-zinc-200">{employer.name}</td>
                   <td className="py-3 px-4 text-sm text-zinc-200">{employer.job}</td>
                   <td className="py-3 px-4 text-sm text-zinc-200">{formatDate(employer.dateOfBirth)}</td>
@@ -60,6 +65,7 @@ export function EmployersList({ employersPromise, page }: EmployersListProps) {
                   <td className="py-3 px-4 text-sm text-zinc-200">{employer.state}</td>
                 </tr>
               ))
+            )
             }
           </tbody>
         </table>

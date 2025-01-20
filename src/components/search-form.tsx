@@ -1,7 +1,7 @@
 'use client'
 
 import Form from 'next/form'
-import { Loader, Loader2, Search } from "lucide-react";
+import { Loader, Loader2, Search, X } from "lucide-react";
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useTransition } from 'react';
 
@@ -10,6 +10,14 @@ export function SearchForm() {
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
 
+  function handleClearInput() {
+    const newSearchParams = new URLSearchParams(searchParams.toString())
+    newSearchParams.delete('q')
+    startTransition(() => {
+      router.push(`?${newSearchParams.toString()}`)
+    })
+  }
+
   return (
     <Form
       action=""
@@ -17,6 +25,7 @@ export function SearchForm() {
     >
       <input
         className="bg-transparent flex-1 outline-none border-0 p-0 text-sm focus:ring-0"
+        defaultValue={searchParams.get('q') ?? ''}
         onChange={(event) => {
           const newSearchParams = new URLSearchParams(searchParams.toString())
           newSearchParams.set('q', event.target.value)
@@ -26,11 +35,19 @@ export function SearchForm() {
         }}
         placeholder="Search employer..."
       />
-      {isPending ? (
-        <Loader2 className='size-4 animate-spin' />
-      ) : (
-        <Search className='size-4 ' />
-      )}
+      {
+        isPending ? (
+          <Loader2 className='size-4 animate-spin' />
+        ) : (
+          searchParams.get('q') ? (
+            <button onClick={handleClearInput} >
+              <X className='size-4' />
+            </button>
+          ) : (
+            <Search className='size-4 ' />
+          )
+        )
+      }
     </Form>
   )
 }
