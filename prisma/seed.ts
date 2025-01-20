@@ -1,25 +1,240 @@
 import { prisma } from "@/lib/prisma"
 import { faker } from '@faker-js/faker'
 
+const EMPLOYERS = [
+  {
+    name: faker.person.fullName(),
+    email: faker.internet.email(),
+    cpf: String(faker.number.int()),
+    city: faker.location.city(),
+    salary: Number(faker.finance.amount({ min: 50000, max: 1000000 })),
+    state: faker.location.state(),
+    dateOfBirth: faker.date.past(),
+    hireDate: faker.date.recent(),
+    job: faker.person.jobTitle(),
+  },
+  {
+    name: faker.person.fullName(),
+    email: faker.internet.email(),
+    cpf: String(faker.number.int()),
+    city: faker.location.city(),
+    salary: Number(faker.finance.amount({ min: 50000, max: 1000000 })),
+    state: faker.location.state(),
+    dateOfBirth: faker.date.past(),
+    hireDate: faker.date.recent(),
+    job: faker.person.jobTitle(),
+  },
+  {
+    name: faker.person.fullName(),
+    email: faker.internet.email(),
+    cpf: String(faker.number.int()),
+    city: faker.location.city(),
+    salary: Number(faker.finance.amount({ min: 50000, max: 1000000 })),
+    state: faker.location.state(),
+    dateOfBirth: faker.date.past(),
+    hireDate: faker.date.recent(),
+    job: faker.person.jobTitle(),
+  },
+  {
+    name: faker.person.fullName(),
+    email: faker.internet.email(),
+    cpf: String(faker.number.int()),
+    city: faker.location.city(),
+    salary: Number(faker.finance.amount({ min: 50000, max: 1000000 })),
+    state: faker.location.state(),
+    dateOfBirth: faker.date.past(),
+    hireDate: faker.date.recent(),
+    job: faker.person.jobTitle(),
+  },
+  {
+    name: faker.person.fullName(),
+    email: faker.internet.email(),
+    cpf: String(faker.number.int()),
+    city: faker.location.city(),
+    salary: Number(faker.finance.amount({ min: 50000, max: 1000000 })),
+    state: faker.location.state(),
+    dateOfBirth: faker.date.past(),
+    hireDate: faker.date.recent(),
+    job: faker.person.jobTitle(),
+  },
+  {
+    name: faker.person.fullName(),
+    email: faker.internet.email(),
+    cpf: String(faker.number.int()),
+    city: faker.location.city(),
+    salary: Number(faker.finance.amount({ min: 50000, max: 1000000 })),
+    state: faker.location.state(),
+    dateOfBirth: faker.date.past(),
+    hireDate: faker.date.recent(),
+    job: faker.person.jobTitle(),
+  },
+  {
+    name: faker.person.fullName(),
+    email: faker.internet.email(),
+    cpf: String(faker.number.int()),
+    city: faker.location.city(),
+    salary: Number(faker.finance.amount({ min: 50000, max: 1000000 })),
+    state: faker.location.state(),
+    dateOfBirth: faker.date.past(),
+    hireDate: faker.date.recent(),
+    job: faker.person.jobTitle(),
+  },
+  {
+    name: faker.person.fullName(),
+    email: faker.internet.email(),
+    cpf: String(faker.number.int()),
+    city: faker.location.city(),
+    salary: Number(faker.finance.amount({ min: 50000, max: 1000000 })),
+    state: faker.location.state(),
+    dateOfBirth: faker.date.past(),
+    hireDate: faker.date.recent(),
+    job: faker.person.jobTitle(),
+  },
+  {
+    name: faker.person.fullName(),
+    email: faker.internet.email(),
+    cpf: String(faker.number.int()),
+    city: faker.location.city(),
+    salary: Number(faker.finance.amount({ min: 50000, max: 1000000 })),
+    state: faker.location.state(),
+    dateOfBirth: faker.date.past(),
+    hireDate: faker.date.recent(),
+    job: faker.person.jobTitle(),
+  },
+  {
+    name: faker.person.fullName(),
+    email: faker.internet.email(),
+    cpf: String(faker.number.int()),
+    city: faker.location.city(),
+    salary: Number(faker.finance.amount({ min: 50000, max: 1000000 })),
+    state: faker.location.state(),
+    dateOfBirth: faker.date.past(),
+    hireDate: faker.date.recent(),
+    job: faker.person.jobTitle(),
+  },
+  {
+    name: faker.person.fullName(),
+    email: faker.internet.email(),
+    cpf: String(faker.number.int()),
+    city: faker.location.city(),
+    salary: Number(faker.finance.amount({ min: 50000, max: 1000000 })),
+    state: faker.location.state(),
+    dateOfBirth: faker.date.past(),
+    hireDate: faker.date.recent(),
+    job: faker.person.jobTitle(),
+  },
+  {
+    name: faker.person.fullName(),
+    email: faker.internet.email(),
+    cpf: String(faker.number.int()),
+    city: faker.location.city(),
+    salary: Number(faker.finance.amount({ min: 50000, max: 1000000 })),
+    state: faker.location.state(),
+    dateOfBirth: faker.date.past(),
+    hireDate: faker.date.recent(),
+    job: faker.person.jobTitle(),
+  },
+  {
+    name: faker.person.fullName(),
+    email: faker.internet.email(),
+    cpf: String(faker.number.int()),
+    city: faker.location.city(),
+    salary: Number(faker.finance.amount({ min: 50000, max: 1000000 })),
+    state: faker.location.state(),
+    dateOfBirth: faker.date.past(),
+    hireDate: faker.date.recent(),
+    job: faker.person.jobTitle(),
+  },
+  {
+    name: faker.person.fullName(),
+    email: faker.internet.email(),
+    cpf: String(faker.number.int()),
+    city: faker.location.city(),
+    salary: Number(faker.finance.amount({ min: 50000, max: 1000000 })),
+    state: faker.location.state(),
+    dateOfBirth: faker.date.past(),
+    hireDate: faker.date.recent(),
+    job: faker.person.jobTitle(),
+  },
+  {
+    name: faker.person.fullName(),
+    email: faker.internet.email(),
+    cpf: String(faker.number.int()),
+    city: faker.location.city(),
+    salary: Number(faker.finance.amount({ min: 50000, max: 1000000 })),
+    state: faker.location.state(),
+    dateOfBirth: faker.date.past(),
+    hireDate: faker.date.recent(),
+    job: faker.person.jobTitle(),
+  },
+  {
+    name: faker.person.fullName(),
+    email: faker.internet.email(),
+    cpf: String(faker.number.int()),
+    city: faker.location.city(),
+    salary: Number(faker.finance.amount({ min: 50000, max: 1000000 })),
+    state: faker.location.state(),
+    dateOfBirth: faker.date.past(),
+    hireDate: faker.date.recent(),
+    job: faker.person.jobTitle(),
+  },
+  {
+    name: faker.person.fullName(),
+    email: faker.internet.email(),
+    cpf: String(faker.number.int()),
+    city: faker.location.city(),
+    salary: Number(faker.finance.amount({ min: 50000, max: 1000000 })),
+    state: faker.location.state(),
+    dateOfBirth: faker.date.past(),
+    hireDate: faker.date.recent(),
+    job: faker.person.jobTitle(),
+  },
+  {
+    name: faker.person.fullName(),
+    email: faker.internet.email(),
+    cpf: String(faker.number.int()),
+    city: faker.location.city(),
+    salary: Number(faker.finance.amount({ min: 50000, max: 1000000 })),
+    state: faker.location.state(),
+    dateOfBirth: faker.date.past(),
+    hireDate: faker.date.recent(),
+    job: faker.person.jobTitle(),
+  },
+  {
+    name: faker.person.fullName(),
+    email: faker.internet.email(),
+    cpf: String(faker.number.int()),
+    city: faker.location.city(),
+    salary: Number(faker.finance.amount({ min: 50000, max: 1000000 })),
+    state: faker.location.state(),
+    dateOfBirth: faker.date.past(),
+    hireDate: faker.date.recent(),
+    job: faker.person.jobTitle(),
+  },
+]
+
 async function main() {
-  for (let index = 0; index < 500; index++) {
-    const mila = await prisma.employer.create({
-      data: {
-        name: faker.person.fullName(),
-        email: faker.internet.email(),
-        cpf: String(faker.number.int()),
-        city: faker.location.city(),
-        salary: Number(faker.finance.amount({ min: 50000, max: 1000000 })),
-        state: faker.location.state(),
-        dateOfBirth: faker.date.past(),
-        hireDate: faker.date.recent(),
-        job: faker.person.jobTitle(),
-      }
+  await Promise.all(
+    EMPLOYERS.map(async (employer) => {
+      return prisma.employer.create({
+        data: {
+          name: employer.name,
+          email: employer.email,
+          cpf: employer.cpf,
+          city: employer.city,
+          salary: employer.salary,
+          state: employer.state,
+          dateOfBirth: employer.dateOfBirth,
+          hireDate: employer.hireDate,
+          job: employer.job,
+        }
+      })
     })
-  }
+  ).then(() => {
+    return console.log('SEED - Employers created')
+  }).catch((error) => {
+    return console.log('SEED - Error creating employers', error)
+  })
 }
 
-main().then(async () => {
-  await prisma.$disconnect()
-  prisma.$disconnect()
-})
+main()
