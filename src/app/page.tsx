@@ -10,6 +10,8 @@ type PageProps = {
   searchParams: Promise<SearchParams>
 }
 
+export const dynamic = 'force-dynamic'
+
 export default async function Home({ searchParams }: PageProps) {
   const { page, q } = await loadSearchParams(searchParams)
   const employers = getEmployers(page, { q })
