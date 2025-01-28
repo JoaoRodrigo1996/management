@@ -10,9 +10,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prisma.studio": "npx prisma studio",
-    "prisma.migrate": "npx prisma migrate dev",
-    "prisma.push": "npx prisma db push"
+    "vercel-build": "prisma generate && prisma migrate deploy && next build"
   },
   "dependencies": {
     "@prisma/client": "6.1.0",
