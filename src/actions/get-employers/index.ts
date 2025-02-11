@@ -3,31 +3,36 @@ import 'server-only'
 import { prisma } from "@/lib/prisma";
 import { network } from "@/utils/network";
 
-export async function getEmployers(page: number, filter?: { q?: string }) {
+export async function getEmployees(page: number, filter?: { q?: string, category?: number }) {
   await network(2000)
 
   try {
-    const [employers, total] = await Promise.all([
-      prisma.employer.findMany({
+    const [employees, total] = await Promise.all([
+      prisma.employee.findMany({
         take: 10,
         skip: (page - 1) * 10,
-        orderBy: {
-          name: 'asc'
+        orderBy: { salary: 'desc' },
+        include: {
+          job: { 
+            select: { 
+              title: true,
+              categoryId: true
+            },
+          },
         },
         where: {
           AND: [
-            filter?.q ? {
-              OR: [{ name: { contains: filter.q } }, { job: { contains: filter.q } }]
-            } : {},
+            filter?.q ? { OR: [{ name: { contains: filter.q } }] } : {},
+            filter?.category ? { job: { categoryId: { equals: filter.category } } } : {}
           ]
         }
       }),
-      prisma.employer.count()
+      prisma.employee.count()
     ])
-  
-    return { employers, total }
+
+    return { employees, total }
   } catch (error) {
     console.error(error)
-    return { employers: [], total: 0 }
+    return { employees: [], total: 0 }
   }
 }

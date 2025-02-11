@@ -1,12 +1,7 @@
 export function EmployersListLoading() {
   return (
     <div className="space-y-6 mt-4">
-      <div className='flex items-center gap-3 px-4 w-72 py-1.5' >
 
-        <div className='flex-1 size-4 animate-pulse bg-white/10 h-5  rounded-lg' />
-
-        <div className='size-4 animate-pulse bg-white/10 h-5 w-5 rounded-full' />
-      </div>
       <section className="border border-white/10 rounded">
         <table className="w-full">
           <thead className="border-b border-white/10">

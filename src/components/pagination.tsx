@@ -5,16 +5,16 @@ type PaginationProps = {
   page?: number
   totalPages: number
   total: number
-  employers: any
+  employees: any
 }
 
-export function Pagination({ employers, total, totalPages, page = 1 }: PaginationProps) {
+export function Pagination({ employees, total, totalPages, page = 1 }: PaginationProps) {
   const router = useRouter()
 
   return (
     <div className='flex justify-between items-center px-4 py-3 border-t border-white/10'>
       <div className="text-sm text-zinc-200">
-        Showing {employers.length} of {total} items
+        Showing {employees.length} of {total} items
       </div>
       <div className='text-right'>
         <div className="inline-flex items-center gap-8">

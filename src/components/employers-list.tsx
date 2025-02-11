@@ -3,38 +3,36 @@
 import { use } from "react";
 
 import { formatDate } from "@/utils/format-date";
-import { formatSalary } from "@/utils/format-salary";
 import { Pagination } from "./pagination";
-import { SearchForm } from "./search-form";
-import Link from "next/link";
+import { formatSalary } from "@/utils/format-salary";
 
-type Employers = {
-  employers: {
-    id: string
-    name: string
-    job: string
-    dateOfBirth: Date
-    hireDate: Date
-    salary: number
-    city: string
-    state: string
+type Employee = {
+  employees: {
+    id: number,
+    name: string,
+    email: string,
+    salary: number,
+    dateOfBirth: Date,
+    city: string,
+    state: string,
+    job: {
+      title: string
+    }
   }[],
   total: number
 }
 
-type EmployersListProps = {
-  employersPromise: Promise<Employers>
+type EmployeesListProps = {
+  employeesPromise: Promise<Employee>
   page: number
 }
 
-export function EmployersList({ employersPromise, page }: EmployersListProps) {
-  const { employers, total } = use(employersPromise)
+export function EmployersList({ employeesPromise, page }: EmployeesListProps) {
+  const { employees, total } = use(employeesPromise)
   const totalPages = Math.ceil(total / 10)
 
   return (
     <div className="space-y-6 mt-4">
-      <SearchForm />
-
       <section className="border border-white/10 rounded">
         <table className="w-full">
           <thead className="border-b border-white/10">
@@ -42,27 +40,25 @@ export function EmployersList({ employersPromise, page }: EmployersListProps) {
               <th className="py-3 px-4 text-sm font-semibold text-left">Name</th>
               <th className="py-3 px-4 text-sm font-semibold text-left">job</th>
               <th className="py-3 px-4 text-sm font-semibold text-left">Date of birth</th>
-              <th className="py-3 px-4 text-sm font-semibold text-left">Hire date</th>
               <th className="py-3 px-4 text-sm font-semibold text-left">Annual salary</th>
               <th className="py-3 px-4 text-sm font-semibold text-left">City</th>
               <th className="py-3 px-4 text-sm font-semibold text-left">State</th>
             </tr>
           </thead>
           <tbody>
-            {employers.length === 0 ? (
+            {employees.length === 0 ? (
               <tr>
-                <td colSpan={7} className="py-3 px-4 text-sm font-medium text-zinc-200 text-center">No employers found</td>
+                <td colSpan={7} className="py-3 px-4 text-sm font-medium text-zinc-200 text-center">No employees found</td>
               </tr>
             ) : (
-              employers.map((employer) => (
-                <tr key={employer.id} className="hover:bg-zinc-900 transition-colors">
-                  <td className="py-3 px-4 text-sm text-zinc-200">{employer.name}</td>
-                  <td className="py-3 px-4 text-sm text-zinc-200">{employer.job}</td>
-                  <td className="py-3 px-4 text-sm text-zinc-200">{formatDate(employer.dateOfBirth)}</td>
-                  <td className="py-3 px-4 text-sm text-zinc-200">{formatDate(employer.hireDate)}</td>
-                  <td className="py-3 px-4 text-sm text-zinc-200">{formatSalary(employer.salary)}</td>
-                  <td className="py-3 px-4 text-sm text-zinc-200">{employer.city}</td>
-                  <td className="py-3 px-4 text-sm text-zinc-200">{employer.state}</td>
+              employees.map((employee) => (
+                <tr key={employee.id} className="hover:bg-zinc-900 transition-colors">
+                  <td className="py-3 px-4 text-sm text-zinc-200">{employee.name}</td>
+                  <td className="py-3 px-4 text-sm text-zinc-200">{employee.job.title}</td>
+                  <td className="py-3 px-4 text-sm text-zinc-200">{formatDate(employee.dateOfBirth)}</td>
+                  <td className="py-3 px-4 text-sm text-zinc-200">{formatSalary(employee.salary)}</td>
+                  <td className="py-3 px-4 text-sm text-zinc-200">{employee.city}</td>
+                  <td className="py-3 px-4 text-sm text-zinc-200">{employee.state}</td>
                 </tr>
               ))
             )
@@ -71,7 +67,7 @@ export function EmployersList({ employersPromise, page }: EmployersListProps) {
         </table>
 
         <Pagination
-          employers={employers}
+          employees={employees}
           page={page}
           totalPages={totalPages}
           total={total}
