@@ -4,20 +4,43 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("STORAGE_POSTGRES_URL")
+  url      = env("DATABASE_URL")
 }
 
-model Employer {
-  id          String   @id @default(cuid())
+model Employee {
+  id          Int      @id
   name        String
   email       String
-  job         String
   salary      Int
   dateOfBirth DateTime
-  hireDate    DateTime
-  cpf         String
   city        String
   state       String
 
-  @@map("employers")
+  job   Job @relation(fields: [jobId], references: [id])
+  jobId Int
+
+  @@index([jobId])
+  @@map("employees")
+}
+
+model Job {
+  id    Int    @id
+  title String
+
+  employees Employee[]
+
+  categories Category @relation(fields: [categoryId], references: [id])
+  categoryId Int
+
+  @@index([categoryId])
+  @@map("jobs")
+}
+
+model Category {
+  id   Int    @id
+  name String
+
+  jobs Job[]
+
+  @@map("categories")
 }
